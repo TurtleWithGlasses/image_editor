@@ -24,7 +24,7 @@ class ImageOutput(Canvas):
                          bd=0,
                          highlightthickness=0,
                          relief="ridge")
-        self.grid(row=0,column=1,sticky="nsew")
+        self.grid(row=0,column=1,sticky="nsew",padx=10,pady=10)
         self.bind("<Configure>",resize_image)
 
 class CloseOutput(ctk.CTkButton):
