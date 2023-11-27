@@ -81,7 +81,7 @@ class App(ctk.CTk):
             brightness_enhancer = ImageEnhance.Brightness(self.image)
             self.image = brightness_enhancer.enhance(self.color_vars["brightness"].get())
         if self.color_vars["vibrance"].get() != VIBRANCE_DEFAULT:
-            vibrance_enhancer = ImageEnhance.Color(self.image)
+            vibrance_enhancer = ImageEnhance. Color(self.image)
             self.image = vibrance_enhancer.enhance(self.color_vars["vibrance"].get())
 
         # grayscale and invert of colors

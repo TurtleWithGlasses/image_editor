@@ -19,7 +19,7 @@ class Menu(ctk.CTkTabview):
 
 class PositionFrame(ctk.CTkFrame):
     def __init__(self,parent,pos_vars):        
-        super().__init__(parent,fg_color="light grey")
+        super().__init__(parent,fg_color="transparent")
         self.pack(expand=True,fill="both")
         SliderPanel(self,"Rotation",pos_vars["rotate"],0,360)
         SliderPanel(self,"Zoom",pos_vars["zoom"], 0, 200)
@@ -31,7 +31,7 @@ class PositionFrame(ctk.CTkFrame):
 
 class ColorFrame(ctk.CTkFrame):
     def __init__(self,parent,color_vars):
-        super().__init__(parent,fg_color="light grey")
+        super().__init__(parent,fg_color="transparent")
         self.pack(expand=True,fill="both")
 
         SwitchPanel(self, (color_vars["grayscale"],"B/W"),(color_vars["invert"],"Invert"))
@@ -46,7 +46,7 @@ class ColorFrame(ctk.CTkFrame):
 
 class EffectsFrame(ctk.CTkFrame):
     def __init__(self,parent,effect_vars):
-        super().__init__(parent,fg_color="light grey")
+        super().__init__(parent,fg_color="transparent")
         self.pack(expand=True,fill="both")
 
         DropDownPanel(self,effect_vars["effect"],EFFECT_OPTIONS)
@@ -59,6 +59,14 @@ class EffectsFrame(ctk.CTkFrame):
 
 class ExportFrame(ctk.CTkFrame):
     def __init__(self,parent):
-        super().__init__(parent,fg_color="purple")
+        super().__init__(parent,fg_color="transparent")
         self.pack(expand=True,fill="both")
-        # SliderPanel(self,"Export")
+
+        # data
+        self.name_string = ctk.StringVar()
+        self.file_string = ctk.StringVar(value="jpg")
+        self.path_string = ctk.StringVar()
+
+        # widget
+        FileNamePanel(self,self.name_string,self.file_string)
+        FilePathPanel(self,self.path_string)
