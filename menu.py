@@ -2,7 +2,7 @@ import customtkinter as ctk
 from panels import *
 
 class Menu(ctk.CTkTabview):
-    def __init__(self,parent,rotation,zoom):
+    def __init__(self,parent,pos_vars,color_vars,effect_vars):
         super().__init__(parent)
         self.grid(row=0,column=0,sticky="nsew",pady=10,padx=10)
 
@@ -12,29 +12,38 @@ class Menu(ctk.CTkTabview):
         self.add("Effects")
         self.add("Export")
 
-        PositionFrame(self.tab("Position"),rotation,zoom)
-        ColorFrame(self.tab("Color"))
-        EffectsFrame(self.tab("Effects"))
+        PositionFrame(self.tab("Position"),pos_vars)
+        ColorFrame(self.tab("Color"),color_vars)
+        EffectsFrame(self.tab("Effects"),effect_vars)
         ExportFrame(self.tab("Export"))
 
 class PositionFrame(ctk.CTkFrame):
-    def __init__(self,parent,rotation,zoom):        
+    def __init__(self,parent,pos_vars):        
         super().__init__(parent,fg_color="light grey")
         self.pack(expand=True,fill="both")
-        SliderPanel(self,"Rotation",rotation,0,360)
-        SliderPanel(self,"Zoom",zoom, 0, 200)
+        SliderPanel(self,"Rotation",pos_vars["rotate"],0,360)
+        SliderPanel(self,"Zoom",pos_vars["zoom"], 0, 200)
+        SegmendtedPanel(self,"Invert",pos_vars["flip"],FLIP_OPTIONS)
 
 class ColorFrame(ctk.CTkFrame):
-    def __init__(self,parent):
-        super().__init__(parent,fg_color="green")
+    def __init__(self,parent,color_vars):
+        super().__init__(parent,fg_color="light grey")
         self.pack(expand=True,fill="both")
-        SliderPanel(self,"Color")
+
+        SwitchPanel(self, (color_vars["grayscale"],"B/W"),(color_vars["invert"],"Invert"))
+        SliderPanel(self,"Brightness",color_vars["brightness"],0,5)
+        SliderPanel(self,"Vibrance",color_vars["vibrance"],0,5)
+        
 
 class EffectsFrame(ctk.CTkFrame):
-    def __init__(self,parent):
-        super().__init__(parent,fg_color="orange")
+    def __init__(self,parent,effect_vars):
+        super().__init__(parent,fg_color="light grey")
         self.pack(expand=True,fill="both")
-        SliderPanel(self,"Effects")
+
+        DropDownPanel(self,effect_vars["effect"],EFFECT_OPTIONS)
+        SliderPanel(self,"Blur",effect_vars["blur"],0,3)
+        SliderPanel(self,"Contrast",effect_vars["contrast"],0,10)
+
 
 class ExportFrame(ctk.CTkFrame):
     def __init__(self,parent):
