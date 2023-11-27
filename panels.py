@@ -1,6 +1,6 @@
 import customtkinter as ctk
-from settings import *
 from tkinter import filedialog
+from settings import *
 
 class Panel(ctk.CTkFrame):
     def __init__(self,parent):
@@ -31,7 +31,7 @@ class SliderPanel(Panel):
     def update_text(self,*args):
         self.num_label.configure(text=f"{round(self.data_var.get(),2)}")
 
-class SegmendtedPanel(Panel):
+class SegmentedPanel(Panel):
     def __init__(self,parent,text,data_var,options):
         super().__init__(parent)
 
@@ -110,4 +110,20 @@ class RevertButton(ctk.CTkButton):
     def revert(self):
         for var, value in self.args:
             var.set(value)
-            
+
+class SaveButton(ctk.CTkButton):
+    def __init__(self,parent,export_image,name_string,file_string,path_string):
+        super().__init__(parent,text="Save",command=self.save)
+        self.pack(side="bottom",pady=10)
+
+        self.export_image = export_image
+        self.name_string = name_string
+        self.file_string = file_string
+        self.path_string = path_string
+
+    def save(self):
+        self.export_image(
+            self.name_string.get(),
+            self.file_string.get(),
+            self.path_string.get()
+        )

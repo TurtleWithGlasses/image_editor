@@ -25,9 +25,8 @@ class App(ctk.CTk):
         
         # widgets
         self.image_import = ImageImport(self,self.import_image)
-        
-        # import button
 
+        # run
         self.mainloop()
 
     def init_parameters(self):
@@ -114,7 +113,7 @@ class App(ctk.CTk):
         self.image_import.grid_forget()
         self.image_output = ImageOutput(self,self.resize_image)
         self.close_button = CloseOutput(self,self.close_edit)
-        self.menu = Menu(self,self.pos_vars,self.color_vars,self.effect_vars)
+        self.menu = Menu(self,self.pos_vars,self.color_vars,self.effect_vars,self.export_image)
 
     def close_edit(self):
         self.image_output.grid_forget()
@@ -148,5 +147,9 @@ class App(ctk.CTk):
         self.image_output.create_image(self.canvas_width / 2,
                                        self.canvas_height / 2,
                                        image=self.image_tk)
+
+    def export_image(self,name,file,path):
+        export_string = f'{path}/{name}.{file}'
+        self.image.save(export_string)
 
 App()
