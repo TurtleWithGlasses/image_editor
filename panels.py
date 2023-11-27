@@ -14,19 +14,21 @@ class SliderPanel(Panel):
         self.rowconfigure((0,1),weight=1)
         self.columnconfigure((0,1),weight=1)
 
+        self.data_var = data_var
+        self.data_var.trace("w",self.update_text)
+
         ctk.CTkLabel(self,text=text).grid(column=0,row=0,sticky="w",padx=10)
         self.num_label = ctk.CTkLabel(self,text=data_var.get())
         self.num_label.grid(column=1,row=0,sticky="e",padx=10)
         
         ctk.CTkSlider(self,
                       fg_color=SLIDER_BG,
-                      variable=data_var,
+                      variable=self.data_var,
                       from_=min_value,
-                      to=max_value,
-                      command=self.update_text).grid(row=1,column=0,columnspan=2,sticky="ew",padx=5,pady=5)
+                      to=max_value).grid(row=1,column=0,columnspan=2,sticky="ew",padx=5,pady=5)
 
-    def update_text(self,value):
-        self.num_label.configure(text=f"{round(value,2)}")
+    def update_text(self,*args):
+        self.num_label.configure(text=f"{round(self.data_var.get(),2)}")
 
 class SegmendtedPanel(Panel):
     def __init__(self,parent,text,data_var,options):
@@ -55,3 +57,14 @@ class DropDownPanel(ctk.CTkOptionMenu):
             variable=data_var
         )
         self.pack(fill="x",pady=4)
+
+class RevertButton(ctk.CTkButton):
+    def __init__(self,parent,*args):
+        super().__init__(parent,text="Revert",command=self.revert)
+        self.pack(side="bottom",pady=10)
+        self.args = args
+    
+    def revert(self):
+        for var, value in self.args:
+            var.set(value)
+            
