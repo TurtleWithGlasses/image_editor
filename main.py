@@ -26,14 +26,18 @@ class App(ctk.CTk):
     def import_image(self,path):
         self.image = Image.open(path)
         self.image_ratio = self.image.size[0] / self.image.size[1]
-
         self.image_tk = ImageTk.PhotoImage(self.image)
 
         self.image_import.grid_forget()
         self.image_output = ImageOutput(self,self.resize_image)
-    
-    def resize_image(self,event):
+        self.close_button = CloseOutput(self,self.close_edit)
 
+    def close_edit(self):
+        self.image_output.grid_forget()
+        self.close_button.place_forget()
+        self.image_import = ImageImport(self,self.import_image)
+
+    def resize_image(self,event):
         # current canvas ratio
         canvas_ratio = event.width / event.height
 

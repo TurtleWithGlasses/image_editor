@@ -12,9 +12,10 @@ class ImageImport(ctk.CTkFrame):
                       text="open image",
                       command=self.open_dialog).pack(expand=True)
 
-    def open_dialog(self):
+    def open_dialog(self,):
         path = filedialog.askopenfile().name
         self.import_func(path)
+        
 
 class ImageOutput(Canvas):
     def __init__(self,parent,resize_image):
@@ -25,3 +26,19 @@ class ImageOutput(Canvas):
                          relief="ridge")
         self.grid(row=0,column=1,sticky="nsew")
         self.bind("<Configure>",resize_image)
+
+class CloseOutput(ctk.CTkButton):
+    def __init__(self,parent,close_func):
+        super().__init__(parent,
+                        command=close_func,
+                        text="x",
+                        text_color=WHITE,
+                        fg_color="transparent",
+                        width=40,
+                        height=40,
+                        corner_radius=0,
+                        hover_color=CLOSE_RED)
+                   
+        self.place(relx=0.99,
+                   rely=0.01,
+                   anchor="ne")
